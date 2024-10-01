@@ -1,0 +1,3 @@
+bja1649@gmail.com;$2y$10$qlnOMkAVTB6KXkrLKlNkrOu9qzo3R1LlIEg/s4r3bKfGk1wrjT76S
+anthonyb1@mymail.nku.edu;$2y$10$CGVDD8bNlbIyev0BcbdCvuDijlTCBnAI46Qt/VB2vPdiwGOtgmaHK
+bja1649@yahoo.com;$2y$10$hZjutt2nt3Suo82V8YKGDeG96F7EtiWqcRX9E1R1Z1S0FlKgX0Nbq
