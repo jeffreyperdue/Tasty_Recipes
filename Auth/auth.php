@@ -22,9 +22,21 @@ function correctFields(){
     }
 }
 
-//check for user in csv
-function findUser(){
-
+//check to see if user exists on sign in page
+function checkUser(){
+    $fp=fopen('users.csv.php','r');
+    while(!feof($fp)){
+        $line=fgets($fp);
+        $line=explode(';', $line);
+    
+        if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
+            fclose($fp);
+            $_SESSION['email']=$line[0];
+            header('location: recipe/index.php');
+            die();
+        }
+    }
+    fclose($fp);
 }
 
 
