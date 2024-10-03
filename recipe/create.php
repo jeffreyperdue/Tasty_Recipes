@@ -16,11 +16,15 @@ session_start();
       </div>
       <div>
         <label>Cook Time</label>
-        <input name="cTime" type="text" required />
+        <input name="cooking_time" type="text" required />
       </div>
       <div>
         <label>Add image (optional)</label>
         <input name="image" type="file" accept="image/png, image/jpeg" />
+      </div>
+      <div>
+        <label>Recipe</label>
+        <input name="recipe" type="text" maxLength="250" />
       </div>
       <div>
         <label>Description</label>
