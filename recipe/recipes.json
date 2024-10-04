@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "title": "Spaghetti Bolognese",
+        "ingredients": [
+            "200g spaghetti",
+            "100g ground beef",
+            "1 onion, chopped",
+            "2 garlic cloves, minced",
+            "400g can of tomatoes",
+            "Salt and pepper to taste"
+        ],
+        "instructions": "Boil the spaghetti. In another pan, fry the onion and garlic, then add the beef. Cook until browned. Add the tomatoes and simmer for 20 minutes. Serve over spaghetti.",
+        "cooking_time": "30 minutes",
+        "category": "Dinner",
+        "image": "spaghetti.jpg",
+        "owner": "john_doe"
+    },
+    {
+        "id": 2,
+        "title": "Chicken Caesar Salad",
+        "ingredients": [
+            "2 chicken breasts",
+            "1 romaine lettuce",
+            "Caesar dressing",
+            "Croutons",
+            "Parmesan cheese"
+        ],
+        "instructions": "Grill the chicken and slice it. Toss the lettuce with Caesar dressing, top with chicken, croutons, and Parmesan.",
+        "cooking_time": "15 minutes",
+        "category": "Lunch",
+        "image": "caesar_salad.jpg",
+        "owner": "jane_smith"
+    }
+]
