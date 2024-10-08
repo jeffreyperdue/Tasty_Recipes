@@ -42,6 +42,8 @@ if (isset($_GET['id'])) {
         <h1 class="display-4">Tasty Recipes</h1>
         <p class="lead">Explore delicious recipes in detail</p>
         <a href="signout.php" class="btn btn-danger">Sign Out</a>
+        <a href="edit.php" class="btn btn-danger mt-4">Edit Recipe</a>
+        <a href="delete.php" class="btn btn-danger mt-4">Delete Recipe</a>
     </div>
 
     <!-- Recipe Card -->

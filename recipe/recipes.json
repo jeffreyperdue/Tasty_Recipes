@@ -31,5 +31,59 @@
         "category": "Lunch",
         "image": "caesar_salad.jpg",
         "owner": "jane_smith"
+    },
+    {
+        "id": 3,
+        "title": "Beef Tacos",
+        "ingredients": [
+            "200g ground beef",
+            "Taco shells",
+            "1 onion, chopped",
+            "1 tomato, diced",
+            "Lettuce, shredded",
+            "Cheddar cheese, grated",
+            "Sour cream",
+            "Taco seasoning"
+        ],
+        "instructions": "Cook the ground beef in a pan with taco seasoning. Assemble the tacos by adding the beef, onion, tomato, lettuce, cheese, and sour cream to the taco shells.",
+        "cooking_time": "20 minutes",
+        "category": "Dinner",
+        "image": "beef_tacos.jpg",
+        "owner": "nick_miller"
+    },
+    {
+        "id": 4,
+        "title": "Pancakes",
+        "ingredients": [
+            "1 cup flour",
+            "1 egg",
+            "1 cup milk",
+            "2 tbsp sugar",
+            "1 tsp baking powder",
+            "Pinch of salt",
+            "Butter for cooking"
+        ],
+        "instructions": "Mix all the ingredients into a smooth batter. Heat a non-stick pan and cook pancakes until golden brown on both sides. Serve with syrup or toppings of your choice.",
+        "cooking_time": "15 minutes",
+        "category": "Breakfast",
+        "image": "pancakes.jpg",
+        "owner": "brandon_anthony"
+    },
+    {
+        "id": 5,
+        "title": "Caprese Salad",
+        "ingredients": [
+            "2 tomatoes, sliced",
+            "1 ball of mozzarella, sliced",
+            "Fresh basil leaves",
+            "Olive oil",
+            "Balsamic vinegar",
+            "Salt and pepper to taste"
+        ],
+        "instructions": "Layer the tomato and mozzarella slices on a plate. Add fresh basil leaves on top. Drizzle with olive oil and balsamic vinegar, and season with salt and pepper.",
+        "cooking_time": "10 minutes",
+        "category": "Appetizer",
+        "image": "caprese_salad.jpg",
+        "owner": "jeffrey_perdue"
     }
 ]
