@@ -6,7 +6,7 @@ session_start();
 ?>
 <html>
   <head>
-    
+<h1>Create New Recipe</h1>    
   </head>
   <body>
     <form method="POST" action="">

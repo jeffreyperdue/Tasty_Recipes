@@ -7,3 +7,5 @@ session_start();
 
 
 ?>
+
+<h1>Delete Recipe</h1>
