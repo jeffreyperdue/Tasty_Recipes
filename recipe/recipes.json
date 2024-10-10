@@ -21,7 +21,7 @@
         "title": "Chicken Caesar Salad",
         "ingredients": [
             "2 chicken breasts",
-            "1 romaine lettuce",
+            "2 romaine lettuce",
             "Caesar dressing",
             "Croutons",
             "Parmesan cheese"
@@ -46,7 +46,7 @@
             "Taco seasoning"
         ],
         "instructions": "Cook the ground beef in a pan with taco seasoning. Assemble the tacos by adding the beef, onion, tomato, lettuce, cheese, and sour cream to the taco shells.",
-        "cooking_time": "20 minutes",
+        "cooking_time": "25 minutes",
         "category": "Dinner",
         "image": "beef_tacos.jpg",
         "owner": "nick_miller"

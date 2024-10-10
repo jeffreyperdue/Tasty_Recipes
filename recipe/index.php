@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Read the JSON file
 $recipesJson = file_get_contents('recipes.json');
 $recipes = json_decode($recipesJson, true);

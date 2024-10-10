@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+  header('Location: signup.php');
+  exit();
+}
+
 if (count($_POST)>0){
   $recipesJson = file_get_contents('recipes.json');
   $recipes = json_decode($recipesJson, true);
