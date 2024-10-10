@@ -38,7 +38,7 @@ else{
       <br>
       <div>
         <label>Ingredients</label> <br>
-        <input name="ingredients" type="text" required />
+        <input name="ingredients[]" type="text" required />
       </div>
       <br>
       <div>
