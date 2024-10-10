@@ -19,9 +19,9 @@ if(count($_POST)>0){
     if(strlen($error)==0){
         $fp=fopen('../users.csv.php','r');
         //check is user exists
-        while(!feof($fp)){
-            $line=fgets($fp);
-            $line=explode(';', $line);
+        while(!feof($fp)){                  //while end of file hasn't been reached
+            $line=fgets($fp);               //read a line and set it to variable $line
+            $line=explode(';', $line);      //splits string into array using ; as delimiter
         
             //if user exists, display messgage and end script
             if(count($line)==2 && $_POST['email']==$line[0]){
@@ -29,21 +29,22 @@ if(count($_POST)>0){
                 break;
             }  
         }
-        fclose($fp);
-        if(strlen($error)==0){
-            //open csv in append mode
-            $fp=fopen('../users.csv.php','a+');
-
-            //write new credentials
-            fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
-
-            //close file
-            fclose($fp);
-            //redirect to main page
-            header('location: ../recipe/index.php');
-            die();
-        }
     }
+    fclose($fp);
+    if(strlen($error)==0){
+        //open csv in append mode
+        $fp=fopen('../users.csv.php','a+');
+
+        //write new credentials
+        fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
+
+        //close file
+        fclose($fp);
+        //redirect to main page
+        header('location: ../recipe/index.php');
+        die();
+    }
+    
 
 }
 

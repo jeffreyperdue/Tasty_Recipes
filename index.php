@@ -15,8 +15,22 @@ if (count($_POST) > 0) {
 
     //check for login credentials in csv file
     if(strlen($error)==0){
-        checkUser();
-        $error='user doesn\'t exist. please create an account';
+       $fp=fopen('users.csv.php','r');
+        while(!feof($fp)){                  //while end of file hasn't been reached
+            $line=fgets($fp);               //read a line and set it to variable $line
+            $line=explode(';', $line);      //splits string into array using ; as delimiter
+        
+            //if email is found and password is correct, sign in, redirect to recipe index
+            if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
+                fclose($fp);
+                $_SESSION['email']=$line[0];
+                header('location: recipe/index.php');
+                die();
+            }
+            $error='user doesn\'t exist. please create an account';
+        }
+        fclose($fp);
+        
     }
 }
 ?>

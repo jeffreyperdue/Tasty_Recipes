@@ -17,27 +17,11 @@ function completeFields(){
 //check if email and password is correct
 function correctFields(){
     if(!filter_var(trim($_POST['email']),FILTER_VALIDATE_EMAIL)) $error='you must enter a valid email';
-    if(strlen($_POST['password'])<8 || strlen($_POST['password'])>16){
-        $error='you must enter a password between 8 and 16 characters long';
+    if(!strlen($_POST['password'])){
+        $error='you must enter a password';
     }
 }
 
-//check to see if user exists on sign in page
-function checkUser(){
-    $fp=fopen('users.csv.php','r');
-    while(!feof($fp)){
-        $line=fgets($fp);
-        $line=explode(';', $line);
-    
-        if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-            fclose($fp);
-            $_SESSION['email']=$line[0];
-            header('location: recipe/index.php');
-            die();
-        }
-    }
-    fclose($fp);
-}
 
 
 
