@@ -84,3 +84,4 @@ $recipes = json_decode($recipesJson, true);
     <script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
+?>

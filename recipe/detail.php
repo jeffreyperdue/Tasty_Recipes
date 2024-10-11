@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
 
                     <!-- Instructions -->
                     <h5>Instructions</h5>
-                    <p><?php echo nl2br($recipe['instructions']); ?></p>
+                    <p><?php echo $recipe['instructions']; ?></p>
 
                     <!-- Back to Recipe List Button -->
                     <a href="index.php" class="btn btn-primary mt-4">Back to Recipes</a>
