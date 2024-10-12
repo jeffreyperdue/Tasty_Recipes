@@ -25,4 +25,4 @@ The platform also features a user authentication system, allowing users to sign 
 [![Watch the video](https://img.youtube.com/vi/2BaMdjEnyT0/0.jpg)](https://www.youtube.com/watch?v=2BaMdjEnyT0)
 
 ### Nick Miller
-[![Watch the video](https://img.youtube.com/vi/yKI84aGvjmg/0.jpg)](https://www.youtube.com/watch?v=yKI84aGvjmg)
+[![Watch the video](https://img.youtube.com/vi/A5zFI1siTXo/0.jpg)](https://www.youtube.com/watch?v=A5zFI1siTXo)
