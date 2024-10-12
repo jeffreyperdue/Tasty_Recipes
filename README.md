@@ -15,3 +15,7 @@ The platform also features a user authentication system, allowing users to sign 
 - **Brandon Anthony**
 - **Nick Miller**
 - **Jeffrey Perdue**
+
+## Demo Videos
+
+![Watch the videos](https://www.youtube.com/watch?v=Abe9ILIsSmk)(https://www.youtube.com/watch?v=2BaMdjEnyT0)(https://www.youtube.com/watch?v=yKI84aGvjmg)  
