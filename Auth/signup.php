@@ -70,9 +70,9 @@ if(count($_POST)>0){
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
-                                <a href="index.php">
-                                    <img src="../img/logo.png" alt="Logo">
-                                </a>
+                            <a href="index.php">
+                                <img src="../img/logo.png" alt="Logo" style="max-width: 150px; height: auto;">
+                            </a>
                             </div>
                         </div>
                     </div>
