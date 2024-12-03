@@ -1,6 +1,7 @@
 <?php 
 //member home page
 require_once('auth.php');
+require_once('db.php');
 $error='';
 
 // if logged in, redirect to recipe index
@@ -13,25 +14,32 @@ if (isLoggedIn()) {
 if (count($_POST) > 0) {
     completeFields();
     correctFields();
-
+    if (!$db) {
+        die("Database connection failed.");
+    }
+    
     //check for login credentials in csv file
-    if(strlen($error)==0){
-       $fp=fopen('../users.csv.php','r');
-        while(!feof($fp)){                  //while end of file hasn't been reached
-            $line=fgets($fp);               //read a line and set it to variable $line
-            $line=explode(';', $line);      //splits string into array using ; as delimiter
+    $query = $db->prepare('SELECT * FROM users WHERE email=?');
+    $query->execute([$_POST['email']]);
+
+    if($query->rowCount()){
+        $user=$query->fetch();
         
-            //if email is found and password is correct, sign in, redirect to recipe index
-            if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-                fclose($fp);
-                $_SESSION['email']=$line[0];
-                header('location: ../index.php');
-                die();
-            }
-            $error='user doesn\'t exist. please create an account';
+        if($_POST['password']===$user['password']){
+            
+            $_SESSION['email']=[
+                'ID'=>$user['ID'],
+                'role'=>$user['role']
+            ];
+            header('location: ../index.php');       
+            
         }
-        fclose($fp);
-        
+        else{
+            header('location: index.php'); 
+        }
+    }
+    else{
+        header('location: signup.php'); 
     }
 }
 ?>
