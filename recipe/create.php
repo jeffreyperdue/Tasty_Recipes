@@ -32,45 +32,47 @@ if (count($_POST)>0){
 else{
 
 ?>
-<html>
-  <head>
-<h1>Create New Recipe</h1>    
-  </head>
-  <body>
-    <form method="POST" action="">
-      <div>
-        <label>Title</label> <br>
-        <input name="title" type="text" required />
-      </div>
-      <br>
-      <div>
-        <label>Ingredients</label> <br>
-        <input name="ingredients[]" type="text" required />
-      </div>
-      <br>
-      <div>
-        <label>Instruction</label> <br>
-        <input name="instructions" type="text" maxLength="1000" required/>
-      </div>
-      <br>
-      <div>
-        <label>Cook Time (In minutes)</label> <br>
-        <input name="cooking_time" type="text" required />
-      </div>
-      <br>
-      <div>
-        <label>Category</label> <br> <!--dropdown list-->
-        <input name="category" type="text" required>
-      </div>
-      <br>
-      <div>
-        <label>Add image (optional)</label> <br>
-        <input name="image" type="file" accept="image/png, image/jpeg" />
-      </div>
-      <br>
-      <button type="submit">Post</button>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create New Recipe</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create New Recipe</h1>
+    <form method="POST" action="" class="mx-auto" style="max-width: 600px;">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" name="title" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients</label>
+            <textarea id="ingredients" name="ingredients[]" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="instructions" class="form-label">Instructions</label>
+            <textarea id="instructions" name="instructions" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="cooking_time" class="form-label">Cook Time (In minutes)</label>
+            <input id="cooking_time" name="cooking_time" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input id="category" name="category" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Add Image (optional)</label>
+            <input id="image" name="image" type="file" class="form-control" accept="image/png, image/jpeg">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Post</button>
     </form>
-  </body>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+</body>
 </html>
 <?php } ?>
 
