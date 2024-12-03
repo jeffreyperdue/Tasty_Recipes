@@ -4,6 +4,7 @@ $error='';
 session_destroy();
 ?>
 
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -25,7 +26,7 @@ session_destroy();
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="index.php">
-                                    <img src="../img/logo.png" alt="Logo" style="max-width: 150px; height: auto;">
+                                    <img src="../img/logo.png" alt="Logo" style="max-width: 20%; height: auto; display: inline-block;">
                                 </a>
                             </div>
                         </div>
@@ -52,7 +53,7 @@ session_destroy();
                        
                         
                         <div class="text-center mt-3">
-                        <a href='../index.php'>Click here to return to home page</a>
+                        <a href="../index.php">Click here to return to home page</a>
                         </div>
                     </div>
                 </div>

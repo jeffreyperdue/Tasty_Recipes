@@ -33,7 +33,7 @@ $recipes = json_decode($recipesJson, true);
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="index.php">
-                                    <img src="./img/logo.png" alt="Tasty Recipes Logo" style="max-width: 150px; height: auto;">
+                                   <img src="./img/logo.png" alt="Logo" style="max-width: 20%; height: auto; display: inline-block;">
                                 </a>
                             </div>
                         </div>
@@ -61,6 +61,7 @@ $recipes = json_decode($recipesJson, true);
                     <h1 class="display-4">Welcome to Tasty Recipes!</h1>
                     <p class="lead">Explore delicious recipes and more!</p>
                     <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
+                    <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
                 </div>
             </div>
             <?php
