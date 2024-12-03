@@ -1,5 +1,4 @@
 <?php
-//homepage
 require_once('Auth/auth.php');
 // Read the JSON file
 $recipesJson = file_get_contents('./recipe/recipes.json');
@@ -30,18 +29,21 @@ $recipes = json_decode($recipesJson, true);
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
                     <div class="row align-items-center">
+                        <!-- Logo Section -->
                         <div class="col-xl-3 col-lg-2">
-                        </div>
-                        <div class="col-xl-6 col-lg-7">
-                            <div class="main-menu d-none d-lg-block">
+                            <div class="logo">
+                                <a href="index.php">
+                                    <img src="./img/logo.png" alt="Tasty Recipes Logo" style="max-width: 150px; height: auto;">
+                                </a>
                             </div>
+                        </div>
+                        <!-- Title Section -->
+                        <div class="col-xl-6 col-lg-7 text-center">
                         </div>
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="search_icon">
+                                <!-- Optional: Add search bar or additional content here -->
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
                     </div>
                 </div>
@@ -51,36 +53,29 @@ $recipes = json_decode($recipesJson, true);
 
     <!-- Welcome Section -->
     <div class="container mt-5">
-    <?php
-        
+        <?php
         if (isLoggedIn()) {
             ?>
-                <div class="row justify-content-center">
-                    <div class="col-md-8 text-center">
-                        <h1 class="display-4">Welcome to Tasty Recipes!</h1>
-                        <p class="lead">Explore delicious recipes and more!</p>
-                        <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
-                        <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
-                    </div>
-                </div><?php
-        }
-        else{
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h1 class="display-4">Welcome to Tasty Recipes!</h1>
+                    <p class="lead">Explore delicious recipes and more!</p>
+                    <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
+                </div>
+            </div>
+            <?php
+        } else {
             ?>
-                <div class="row justify-content-center">
-                    <div class="col-md-8 text-center">
-                        <h1 class="display-4">Welcome to Tasty Recipes!</h1>
-                        <p class="lead">Explore delicious recipes and more!</p>
-                        <a href="./Auth/index.php" class="btn btn-danger mt-4">Sign in</a>
-                        <!--<a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>-->
-                    </div>
-                </div><?php
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h1 class="display-4">Welcome to Tasty Recipes!</h1>
+                    <p class="lead">Explore delicious recipes and more!</p>
+                    <a href="./Auth/index.php" class="btn btn-danger mt-4">Sign In</a>
+                </div>
+            </div>
+            <?php
         }
-    ?>
-    
-    
-
-        
-
+        ?>
         <!-- Recipe Cards Section -->
         <div class="row mt-5">
             <?php foreach ($recipes as $recipe): ?>
@@ -93,7 +88,7 @@ $recipes = json_decode($recipesJson, true);
                             <strong>Cooking Time:</strong> <?php echo $recipe['cooking_time']; ?><br>
                             <strong>Category:</strong> <?php echo $recipe['category']; ?>
                         </p>
-                        <a href="recipe/detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
+                        <a href="./recipe/detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
                     </div>
                 </div>
             </div>

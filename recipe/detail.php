@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_GET['id'])) {
     $recipe_id = $_GET['id'];
 
@@ -36,15 +37,25 @@ if (isset($_GET['id'])) {
 </head>
 <body>
 
+    <div class="col-xl-3 col-lg-2">
+        <div class="logo">
+            <a href="index.php">
+                <img src="../img/logo.png" alt="Tasty Recipes Logo" style="max-width: 150px; height: auto;">
+            </a>
+        </div>
+    </div>
+
 <div class="container mt-5">
     <!-- Website Title -->
     <div class="text-center mb-5">
         <h1 class="display-4">Tasty Recipes</h1>
         <p class="lead">Explore delicious recipes in detail</p>
-        <a href="../Auth/signout.php" class="btn btn-danger">Sign Out</a>
-        <a href="edit.php?id=<?= $recipe['id']; ?>" class="btn btn-danger mt-4">Edit Recipe</a>
-        <a href="delete.php?id=<?= $recipe['id']; ?>" class="btn btn-danger mt-4">Delete Recipe</a>
+        <a href="../Auth/signout.php" class="btn btn-danger d-inline-block">Sign Out</a>
+        <a href="edit.php?id=<?= $recipe['id']; ?>" class="btn btn-danger d-inline-block">Edit Recipe</a>
+        <a href="delete.php?id=<?= $recipe['id']; ?>" class="btn btn-danger d-inline-block">Delete Recipe</a>
     </div>
+
+
 
     <!-- Recipe Card -->
     <div class="row justify-content-center">
