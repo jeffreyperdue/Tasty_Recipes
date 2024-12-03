@@ -7,16 +7,14 @@ $error='';
 // if logged in, redirect to recipe index
 if (isLoggedIn()) {
     header('location: ../index.php');
-    die();
+    
 }
 
 // check if form is submitted
 if (count($_POST) > 0) {
     completeFields();
     correctFields();
-    if (!$db) {
-        die("Database connection failed.");
-    }
+    
     
     //check for login credentials in csv file
     $query = $db->prepare('SELECT * FROM users WHERE email=?');
@@ -31,14 +29,17 @@ if (count($_POST) > 0) {
                 'ID'=>$user['ID'],
                 'role'=>$user['role']
             ];
+            $account=true;
             header('location: ../index.php');       
             
         }
         else{
-            header('location: index.php'); 
+            
+            header('location: signup.php'); 
         }
     }
     else{
+       
         header('location: signup.php'); 
     }
 }
