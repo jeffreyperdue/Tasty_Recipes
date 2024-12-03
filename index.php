@@ -1,38 +1,8 @@
-<?php 
-require_once('Auth/auth.php');
-$error='';
-
-// if logged in, redirect to recipe index
-if (isLoggedIn()) {
-    header('location: recipe/index.php');
-    die();
-}
-
-// check if form is submitted
-if (count($_POST) > 0) {
-    completeFields();
-    correctFields();
-
-    //check for login credentials in csv file
-    if(strlen($error)==0){
-       $fp=fopen('users.csv.php','r');
-        while(!feof($fp)){                  //while end of file hasn't been reached
-            $line=fgets($fp);               //read a line and set it to variable $line
-            $line=explode(';', $line);      //splits string into array using ; as delimiter
-        
-            //if email is found and password is correct, sign in, redirect to recipe index
-            if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-                fclose($fp);
-                $_SESSION['email']=$line[0];
-                header('location: recipe/index.php');
-                die();
-            }
-            $error='user doesn\'t exist. please create an account';
-        }
-        fclose($fp);
-        
-    }
-}
+<?php
+session_start();
+// Read the JSON file
+$recipesJson = file_get_contents('./recipe/recipes.json');
+$recipes = json_decode($recipesJson, true);
 ?>
 
 <!doctype html>
@@ -40,12 +10,18 @@ if (count($_POST) > 0) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Tasty Recipes - Sign In</title>
+    <title>Welcome - Tasty Recipes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        h1 {
+            margin-top: 100px;
+        }
+    </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -54,55 +30,58 @@ if (count($_POST) > 0) {
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-2">
-                            <div class="logo">
-                                <a href="index.php">
-                                    <img src="img/logo.png" alt="Logo">
-                                </a>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu d-none d-lg-block">
                             </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="search_icon">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    
-    <!-- Login Section -->
+
+    <!-- Welcome Section -->
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Sign In to Tasty Recipes</h3>
-                        <!-- Display error message if any -->
-                        <?php if (strlen($error) > 0): ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?php echo $error; ?>
-                            </div>
-                        <?php endif; ?>
+            <div class="col-md-8 text-center">
+                <h1 class="display-4">Welcome to Tasty Recipes!</h1>
+                <p class="lead">Explore delicious recipes and more!</p>
+                <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
+                <a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>
+            </div>
+        </div>
 
-                        <form method="POST">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-4 w-100">Sign In</button>
-                        </form>
-                        
-                        <div class="text-center mt-3">
-                            <a href="Auth/signup.php">New to the site? Create an account here.</a>
-                        </div>
+        <!-- Recipe Cards Section -->
+        <div class="row mt-5">
+            <?php foreach ($recipes as $recipe): ?>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="<?php echo isset($recipe['image']) ? './img/' . $recipe['image'] : '../img/placeholder.png'; ?>" alt="<?php echo $recipe['title']; ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $recipe['title']; ?></h5>
+                        <p class="card-text">
+                            <strong>Cooking Time:</strong> <?php echo $recipe['cooking_time']; ?><br>
+                            <strong>Category:</strong> <?php echo $recipe['category']; ?>
+                        </p>
+                        <a href="detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
     <!-- JS Scripts -->
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="./js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
 </body>
 </html>
+?>
