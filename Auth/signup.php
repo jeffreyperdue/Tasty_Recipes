@@ -4,7 +4,7 @@ $error='';
 
 //if already logged in, send to entity index
 if(isset($_SESSION['email'])){
-    header('location: ../recipe/index.php');
+    header('location: ../index.php');
     die();
 }
 
@@ -41,7 +41,7 @@ if(count($_POST)>0){
         //close file
         fclose($fp);
         //redirect to main page
-        header('location: ../recipe/index.php');
+        header('location: ../index.php');
         die();
     }
     
