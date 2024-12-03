@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once('Auth/auth.php');
 // Read the JSON file
 $recipesJson = file_get_contents('./recipe/recipes.json');
 $recipes = json_decode($recipesJson, true);
@@ -50,14 +50,35 @@ $recipes = json_decode($recipesJson, true);
 
     <!-- Welcome Section -->
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <h1 class="display-4">Welcome to Tasty Recipes!</h1>
-                <p class="lead">Explore delicious recipes and more!</p>
-                <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
-                <a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>
-            </div>
-        </div>
+    <?php
+        
+        if (isLoggedIn()) {
+            ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h1 class="display-4">Welcome to Tasty Recipes!</h1>
+                        <p class="lead">Explore delicious recipes and more!</p>
+                        <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
+                        <!--<a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>-->
+                    </div>
+                </div><?php
+        }
+        else{
+                ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h1 class="display-4">Welcome to Tasty Recipes!</h1>
+                        <p class="lead">Explore delicious recipes and more!</p>
+                        <a href="./Auth/index.php" class="btn btn-danger mt-4">Sign in</a>
+                        <!--<a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>-->
+                    </div>
+                </div><?php
+        }
+        ?>
+    
+    
+
+        
 
         <!-- Recipe Cards Section -->
         <div class="row mt-5">

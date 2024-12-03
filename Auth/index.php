@@ -1,10 +1,10 @@
 <?php 
-require_once('Auth/auth.php');
+require_once('auth.php');
 $error='';
 
 // if logged in, redirect to recipe index
 if (isLoggedIn()) {
-    header('location: recipe/index.php');
+    header('location: ../index.php');
     die();
 }
 
@@ -15,7 +15,7 @@ if (count($_POST) > 0) {
 
     //check for login credentials in csv file
     if(strlen($error)==0){
-       $fp=fopen('users.csv.php','r');
+       $fp=fopen('../users.csv.php','r');
         while(!feof($fp)){                  //while end of file hasn't been reached
             $line=fgets($fp);               //read a line and set it to variable $line
             $line=explode(';', $line);      //splits string into array using ; as delimiter
@@ -24,7 +24,7 @@ if (count($_POST) > 0) {
             if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
                 fclose($fp);
                 $_SESSION['email']=$line[0];
-                header('location: recipe/index.php');
+                header('location: ../index.php');
                 die();
             }
             $error='user doesn\'t exist. please create an account';
@@ -42,9 +42,9 @@ if (count($_POST) > 0) {
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Tasty Recipes - Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <!-- Header -->
@@ -56,7 +56,7 @@ if (count($_POST) > 0) {
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="index.php">
-                                    <img src="img/logo.png" alt="Logo">
+                                    <img src="../img/logo.png" alt="Logo">
                                 </a>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ if (count($_POST) > 0) {
                         </form>
                         
                         <div class="text-center mt-3">
-                            <a href="Auth/signup.php">New to the site? Create an account here.</a>
+                            <a href="signup.php">New to the site? Create an account here.</a>
                         </div>
                     </div>
                 </div>
