@@ -52,7 +52,7 @@ session_destroy();
                        
                         
                         <div class="text-center mt-3">
-                        <a href='../index.php'>Click here to return to signin page</a>
+                        <a href='../index.php'>Click here to return to home page</a>
                         </div>
                     </div>
                 </div>

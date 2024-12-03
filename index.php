@@ -1,4 +1,5 @@
 <?php
+//homepage
 require_once('Auth/auth.php');
 // Read the JSON file
 $recipesJson = file_get_contents('./recipe/recipes.json');
@@ -59,12 +60,12 @@ $recipes = json_decode($recipesJson, true);
                         <h1 class="display-4">Welcome to Tasty Recipes!</h1>
                         <p class="lead">Explore delicious recipes and more!</p>
                         <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
-                        <!--<a href="create.php" class="btn btn-danger mt-4">Create New Recipe</a>-->
+                        <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
                     </div>
                 </div><?php
         }
         else{
-                ?>
+            ?>
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
                         <h1 class="display-4">Welcome to Tasty Recipes!</h1>
@@ -74,7 +75,7 @@ $recipes = json_decode($recipesJson, true);
                     </div>
                 </div><?php
         }
-        ?>
+    ?>
     
     
 
@@ -92,7 +93,7 @@ $recipes = json_decode($recipesJson, true);
                             <strong>Cooking Time:</strong> <?php echo $recipe['cooking_time']; ?><br>
                             <strong>Category:</strong> <?php echo $recipe['category']; ?>
                         </p>
-                        <a href="detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
+                        <a href="recipe/detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
                     </div>
                 </div>
             </div>
@@ -105,4 +106,3 @@ $recipes = json_decode($recipesJson, true);
     <script src="./js/bootstrap.min.js"></script>
 </body>
 </html>
-?>

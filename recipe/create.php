@@ -27,7 +27,7 @@ if (count($_POST)>0){
   $recipes[]= $newData;
   $recipes = json_encode($recipes, JSON_PRETTY_PRINT);
   file_put_contents('recipes.json', $recipes);
-  header('location: index.php');
+  header('location: ../index.php');
 }
 else{
 

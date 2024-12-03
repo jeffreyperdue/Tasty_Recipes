@@ -1,4 +1,5 @@
 <?php 
+//member home page
 require_once('auth.php');
 $error='';
 

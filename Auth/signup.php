@@ -41,6 +41,7 @@ if(count($_POST)>0){
         //close file
         fclose($fp);
         //redirect to main page
+        $_SESSION['email']=$line[0];
         header('location: ../index.php');
         die();
     }
