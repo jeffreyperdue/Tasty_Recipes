@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['email'])) {
-    header('Location: signup.php');
+    header('Location: ../Auth/signup.php');
     exit();
 }
 
@@ -17,7 +17,7 @@ for ($i =0; $i<count($recipes); $i++){
 $recipes=array_values($recipes);
 $recipes = json_encode($recipes, JSON_PRETTY_PRINT);
 file_put_contents('recipes.json', $recipes);
-header('location: index.php');
+header('location: ../index.php');
 
 
 

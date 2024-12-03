@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
     <div class="text-center mb-5">
         <h1 class="display-4">Tasty Recipes</h1>
         <p class="lead">Explore delicious recipes in detail</p>
-        <a href="signout.php" class="btn btn-danger">Sign Out</a>
+        <a href="../Auth/signout.php" class="btn btn-danger">Sign Out</a>
         <a href="edit.php?id=<?= $recipe['id']; ?>" class="btn btn-danger mt-4">Edit Recipe</a>
         <a href="delete.php?id=<?= $recipe['id']; ?>" class="btn btn-danger mt-4">Delete Recipe</a>
     </div>
@@ -76,7 +76,7 @@ if (isset($_GET['id'])) {
                     <p><?php echo $recipe['instructions']; ?></p>
 
                     <!-- Back to Recipe List Button -->
-                    <a href="index.php" class="btn btn-primary mt-4">Back to Recipes</a>
+                    <a href="../index.php" class="btn btn-primary mt-4">Back to Recipes</a>
                 </div>
             </div>
         </div>
