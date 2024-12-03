@@ -1,11 +1,12 @@
 <?php 
 require_once('auth.php');
+require_once('db.php');
 $error='';
 
 //if already logged in, send to entity index
 if(isset($_SESSION['email'])){
     header('location: ../index.php');
-    die();
+    
 }
 
 //check to see if form has been submitted with values
@@ -16,36 +17,10 @@ if(count($_POST)>0){
     correctFields();
     if($_POST['password'] != $_POST['password_confirm']) $error='passwords must match';
 
-    if(strlen($error)==0){
-        $fp=fopen('../users.csv.php','r');
-        //check is user exists
-        while(!feof($fp)){                  //while end of file hasn't been reached
-            $line=fgets($fp);               //read a line and set it to variable $line
-            $line=explode(';', $line);      //splits string into array using ; as delimiter
-        
-            //if user exists, display messgage and end script
-            if(count($line)==2 && $_POST['email']==$line[0]){
-                $error='The email is already registered';
-                break;
-            }  
-        }
-    }
-    fclose($fp);
-    if(strlen($error)==0){
-        //open csv in append mode
-        $fp=fopen('../users.csv.php','a+');
+    $query=$db->prepare('INSERT INTO users(email,password,firstname,lastname,role) VALUES(?,?,?,?,?)');
+    $query->execute([$_POST['email'],$_POST['password'],$_POST['firstname'],$_POST['lastname'],1]);
 
-        //write new credentials
-        fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
-
-        //close file
-        fclose($fp);
-        //redirect to main page
-        $_SESSION['email']=$line[0];
-        header('location: ../index.php');
-        die();
-    }
-    
+    header('location: ../index.php');
 
 }
 
@@ -98,6 +73,14 @@ if(count($_POST)>0){
 
                         <form method="POST">
                             <div class="form-group">
+                                <label for="firstname">First Name</label>
+                                <input type="text" name="firstname" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" name="lastname" class="form-control" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" name="email" class="form-control" required>
                             </div>
@@ -113,7 +96,7 @@ if(count($_POST)>0){
                         </form>
                         
                         <div class="text-center mt-3">
-                            <a href="../index.php">Already have an account? Click here to sign in!</a>
+                            <a href="index.php">Already have an account? Click here to sign in!</a>
                         </div>
                     </div>
                 </div>
