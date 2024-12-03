@@ -62,6 +62,7 @@ $recipes = json_decode($recipesJson, true);
                     <p class="lead">Explore delicious recipes and more!</p>
                     <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
                     <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
+                    <a href="cookbook.php" class="btn btn-danger mt-4">View Cookbook</a>
                 </div>
             </div>
             <?php

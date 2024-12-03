@@ -88,6 +88,9 @@ if (isset($_GET['id'])) {
 
                     <!-- Back to Recipe List Button -->
                     <a href="../index.php" class="btn btn-primary mt-4">Back to Recipes</a>
+
+                    <!-- Favorite Button -->
+                    <a href="../index.php" class="btn btn-primary mt-4">Add to Cookbook</a>
                 </div>
             </div>
         </div>
