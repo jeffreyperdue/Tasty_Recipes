@@ -83,7 +83,7 @@ $recipes = json_decode($recipesJson, true);
             <?php foreach ($recipes as $recipe): ?>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img class="card-img-top" src="<?php echo isset($recipe['image']) ? './img/' . $recipe['image'] : '../img/placeholder.png'; ?>" alt="<?php echo $recipe['title']; ?>">
+                <img class="card-img-top" src="<?php echo isset($recipe['image']) && file_exists('./img/' . $recipe['image']) ? './img/' . $recipe['image'] : './img/placeholder.png'; ?>" alt="<?php echo $recipe['title']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $recipe['title']; ?></h5>
                         <p class="card-text">
