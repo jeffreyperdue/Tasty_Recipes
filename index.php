@@ -1,8 +1,14 @@
 <?php
 require_once('Auth/auth.php');
-// Read the JSON file
-$recipesJson = file_get_contents('./recipe/recipes.json');
-$recipes = json_decode($recipesJson, true);
+require_once('Auth/db.php');
+// Read recipes from database
+try {
+    $stmt = $db->query("SELECT * FROM recipes");
+    $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error fetching recipes: " . htmlspecialchars($e->getMessage());
+    exit;
+}
 ?>
 
 <!doctype html>
@@ -81,21 +87,22 @@ $recipes = json_decode($recipesJson, true);
         <!-- Recipe Cards Section -->
         <div class="row mt-5">
             <?php foreach ($recipes as $recipe): ?>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                <img class="card-img-top" src="<?php echo isset($recipe['image']) && file_exists('./img/' . $recipe['image']) ? './img/' . $recipe['image'] : './img/placeholder.png'; ?>" alt="<?php echo $recipe['title']; ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $recipe['title']; ?></h5>
-                        <p class="card-text">
-                            <strong>Cooking Time:</strong> <?php echo $recipe['cooking_time']; ?><br>
-                            <strong>Category:</strong> <?php echo $recipe['category']; ?>
-                        </p>
-                        <a href="./recipe/detail.php?id=<?php echo $recipe['id']; ?>" class="btn btn-primary">See More</a>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                    <img class="card-img-top" src="./img/<?php echo !empty($recipe['image']) && file_exists('./img/' . $recipe['image']) ? $recipe['image'] : 'placeholder.png'; ?>" alt="<?php echo htmlspecialchars($recipe['title']); ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo htmlspecialchars($recipe['title']); ?></h5>
+                            <p class="card-text">
+                                <strong>Cooking Time:</strong> <?php echo htmlspecialchars($recipe['cooking_time']); ?><br>
+                                <strong>Category:</strong> <?php echo htmlspecialchars($recipe['category']); ?>
+                            </p>
+                            <a href="recipe/detail.php?id=<?php echo $recipe['recipe_ID']; ?>" class="btn btn-primary">See More</a>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php endforeach; ?>
         </div>
+
     </div>
 
     <!-- JS Scripts -->
