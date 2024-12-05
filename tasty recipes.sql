@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 09:50 PM
+-- Generation Time: Dec 05, 2024 at 05:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tasty_recipes`
+-- Database: `tasty recipes`
 --
 
 -- --------------------------------------------------------
@@ -96,7 +96,6 @@ INSERT INTO `recipes` (`recipe_ID`, `user_ID`, `title`, `image`, `ingredients`, 
 (14, 1, 'Greek Salad', 'greek_salad.jpg', '2 cucumbers, diced\n3 tomatoes, diced\n1 red onion, sliced\n1/2 cup olives\n1/2 cup feta cheese, crumbled\n2 tbsp olive oil\n1 tbsp lemon juice\nSalt and pepper to taste', 'Combine cucumbers, tomatoes, onion, olives, and feta in a bowl. Drizzle with olive oil and lemon juice. Season with salt and pepper.', '10 minutes', 'Appetizer'),
 (15, 1, 'Banana Smoothie', 'banana_smoothie.jpg', '2 bananas\n1 cup milk\n1 tbsp honey\n1/2 tsp vanilla extract\nIce cubes (optional)', 'Blend bananas, milk, honey, and vanilla until smooth. Add ice cubes if desired. Serve chilled.', '5 minutes', 'Beverage');
 
-
 -- --------------------------------------------------------
 
 --
@@ -106,7 +105,7 @@ INSERT INTO `recipes` (`recipe_ID`, `user_ID`, `title`, `image`, `ingredients`, 
 CREATE TABLE `users` (
   `user_ID` int(10) UNSIGNED NOT NULL,
   `email` varchar(64) NOT NULL,
-  `password` varchar(64) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
   `role` tinyint(3) NOT NULL
@@ -117,9 +116,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`, `role`) VALUES
-(1, 'perduej7@nku.edu', '123', 'Jeff', 'Perdue', 0),
+(1, 'perduej7@nku.edu', '123', 'Jeff', 'Perdue', 1),
 (2, 'millern28@nku.edu', '456', 'Nick', 'Miller', 1),
-(3, 'anthonyb1@nku.edu', '789', 'Brandon', 'Anthony', 1);
+(3, 'anthonyb1@nku.edu', '789', 'Brandon', 'Anthony', 1),
+(4, 'caporusso@user.com', '123456', 'Nicholas', 'Caporusso', 1),
+(5, 'caporusso@admin.com', 'makesgoodcheese', 'Nicholas', 'Caporusso', 2);
 
 --
 -- Indexes for dumped tables
@@ -177,7 +178,7 @@ ALTER TABLE `cookbook`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `recipe_ID` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `recipe_ID` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
