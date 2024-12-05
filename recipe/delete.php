@@ -1,24 +1,31 @@
-<?php 
+<?php
 session_start();
+require_once('../auth/db.php'); 
 
-if (!isset($_SESSION['email'])) {
-    header('Location: ../Auth/signup.php');
+if (!isset($_SESSION['user_ID'])) {
+    header('Location: ../auth/index.php');
     exit();
 }
 
-$recipesJson = file_get_contents('recipes.json');
-$recipes = json_decode($recipesJson, true);
-
-for ($i =0; $i<count($recipes); $i++){
-    if($recipes[$i]['id'] == $_GET['id']){
-        unset($recipes[$i]);
-    }
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "Invalid Recipe ID.";
+    exit();
 }
-$recipes=array_values($recipes);
-$recipes = json_encode($recipes, JSON_PRETTY_PRINT);
-file_put_contents('recipes.json', $recipes);
-header('location: ../index.php');
 
+$recipeId = intval($_GET['id']); 
 
+try {
+    $stmt = $db->prepare("DELETE FROM recipes WHERE recipe_ID = :recipe_id");
+    $stmt->execute([':recipe_id' => $recipeId]);
 
+    if ($stmt->rowCount() > 0) {
+        header('Location: ../index.php');
+        exit();
+    } else {
+        echo "Recipe not found or could not be deleted.";
+    }
+} catch (PDOException $e) {
+    echo "Error deleting recipe: " . htmlspecialchars($e->getMessage());
+    exit();
+}
 ?>

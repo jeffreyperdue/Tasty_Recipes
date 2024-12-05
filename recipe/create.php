@@ -1,36 +1,43 @@
 <?php
 session_start();
+require_once('../auth/db.php'); 
 
-if (!isset($_SESSION['email'])) {
-  header('Location: signup.php');
-  exit();
+if (!isset($_SESSION['user_ID'])) {
+    header('Location: ../auth/index.php');
+    exit();
 }
 
-if (count($_POST)>0){
-  $recipesJson = file_get_contents('recipes.json');
-  $recipes = json_decode($recipesJson, true);
-  $nextId = count($recipes) + 1;
-  $owner = 'Placeholder';
-  if ($_POST['image'] == null){
-    $_POST['image'] = '../img/No_Image_Available.jpg';
-  }
-  $newData = [
-    'id' => $nextId,
-    'title' => $_POST['title'],
-    'ingredients' => $_POST['ingredients'],
-    'instructions' => $_POST['instructions'],
-    'cooking_time' => $_POST['cooking_time'],
-    'category' => $_POST['category'],
-    'image' => $_POST['image'],
-    'owner' => $owner
-  ];
-  $recipes[]= $newData;
-  $recipes = json_encode($recipes, JSON_PRETTY_PRINT);
-  file_put_contents('recipes.json', $recipes);
-  header('location: ../index.php');
-}
-else{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $imagePath = '../img/No_Image_Available.jpg'; 
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = '../img/';
+            $imagePath = $uploadDir . basename($_FILES['image']['name']);
+            move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+            $imagePath = basename($_FILES['image']['name']); 
+        }
 
+        $stmt = $db->prepare("
+            INSERT INTO recipes (user_ID, title, ingredients, instructions, cooking_time, category, image)
+            VALUES (:user_ID, :title, :ingredients, :instructions, :cooking_time, :category, :image)
+        ");
+        $stmt->execute([
+            ':user_ID' => $_SESSION['user_ID'], 
+            ':title' => $_POST['title'],
+            ':ingredients' => implode("\n", $_POST['ingredients']), // Combine ingredients into a single string
+            ':instructions' => $_POST['instructions'],
+            ':cooking_time' => $_POST['cooking_time'],
+            ':category' => $_POST['category'],
+            ':image' => $imagePath
+        ]);
+
+        header('Location: ../index.php');
+        exit();
+    } catch (PDOException $e) {
+        echo "Error creating recipe: " . htmlspecialchars($e->getMessage());
+        exit();
+    }
+} else {
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +50,7 @@ else{
 <body>
 <div class="container mt-5">
     <h1 class="text-center mb-4">Create New Recipe</h1>
-    <form method="POST" action="" class="mx-auto" style="max-width: 600px;">
+    <form method="POST" enctype="multipart/form-data" action="" class="mx-auto" style="max-width: 600px;">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input id="title" name="title" type="text" class="form-control" required>
@@ -75,4 +82,3 @@ else{
 </body>
 </html>
 <?php } ?>
-

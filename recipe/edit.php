@@ -1,39 +1,51 @@
 <?php
 session_start();
+require_once('../auth/db.php'); 
 
-if (!isset($_SESSION['email'])) {
-  header('Location: signup.php');
-  exit();
+if (!isset($_SESSION['user_ID'])) {
+    header('Location: ../auth/index.php');
+    exit();
 }
 
-$recipesJson = file_get_contents('recipes.json');
-$recipes = json_decode($recipesJson, true);
-if (count($_POST)>0){
-  for ($i =0; $i<count($recipes); $i++){
-    if($recipes[$i]['id'] == $_GET['id']){
-      $item = $_POST;
-      $recipes[$i]['id'] = $recipes[$i]['id'];
-      $recipes[$i]['title'] = $item['title'];
-      $recipes[$i]['ingredients'] = $item['ingredients'];
-      $recipes[$i]['instructions'] = $item['instructions'];
-      $recipes[$i]['cooking_time'] = $item['cooking_time'];
-      $recipes[$i]['category'] = $item['category'];
-      $recipes[$i]['image'] = $recipes[$i]['image'];
-      $recipes[$i]['owner'] = $recipes[$i]['owner'];
-    }
-  }
-    $recipes = json_encode($recipes, JSON_PRETTY_PRINT);
-    file_put_contents('recipes.json', $recipes);
-    header('location: ../index.php');
-} else{
-    $recipeId = $_GET['id'];
-    foreach ($recipes as $recipe) {
-      if ($recipe['id'] == $recipeId) {
-        $currentRecipe = $recipe;
-        break;
-      }
-    }
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "Invalid Recipe ID.";
+    exit();
+}
 
+$recipeId = intval($_GET['id']);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $stmt = $db->prepare("UPDATE recipes SET title = :title, ingredients = :ingredients, instructions = :instructions, cooking_time = :cooking_time, category = :category WHERE recipe_ID = :recipe_id");
+        $stmt->execute([
+            ':title' => $_POST['title'],
+            ':ingredients' => implode("\n", $_POST['ingredients']), 
+            ':instructions' => $_POST['instructions'],
+            ':cooking_time' => $_POST['cooking_time'],
+            ':category' => $_POST['category'],
+            ':recipe_id' => $recipeId
+        ]);
+        header('Location: ../index.php');
+        exit();
+    } catch (PDOException $e) {
+        echo "Error updating recipe: " . htmlspecialchars($e->getMessage());
+        exit();
+    }
+} else {
+    try {
+        $stmt = $db->prepare("SELECT * FROM recipes WHERE recipe_ID = :recipe_id");
+        $stmt->execute([':recipe_id' => $recipeId]);
+        $currentRecipe = $stmt->fetch();
+
+        if (!$currentRecipe) {
+            echo "Recipe not found.";
+            exit();
+        }
+    } catch (PDOException $e) {
+        echo "Error fetching recipe: " . htmlspecialchars($e->getMessage());
+        exit();
+    }
+}
 ?>
 
 <!doctype html>
@@ -53,11 +65,14 @@ if (count($_POST)>0){
             <input id="title" name="title" type="text" class="form-control" value="<?= $currentRecipe['title'] ?>" required>
         </div>
         <div class="mb-3">
-            <label for="ingredients" class="form-label">Ingredients</label>
-            <?php foreach ($currentRecipe['ingredients'] as $ingredient): ?>
-                <input name="ingredients[]" type="text" class="form-control mb-2" value="<?= $ingredient ?>" required>
-            <?php endforeach; ?>
+          <label for="ingredients" class="form-label">Ingredients</label>
+          <?php 
+          $ingredientsArray = explode("\n", $currentRecipe['ingredients']);
+          foreach ($ingredientsArray as $ingredient): ?>
+            <input name="ingredients[]" type="text" class="form-control mb-2" value="<?= htmlspecialchars($ingredient) ?>" required>
+          <?php endforeach; ?>
         </div>
+
         <div class="mb-3">
             <label for="instructions" class="form-label">Instructions</label>
             <textarea id="instructions" name="instructions" class="form-control" rows="5" required><?= $currentRecipe['instructions'] ?></textarea>
@@ -81,5 +96,4 @@ if (count($_POST)>0){
 </body>
 </html>
 <?php
-}
 ?>

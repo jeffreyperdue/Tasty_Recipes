@@ -25,10 +25,9 @@ if (count($_POST) > 0) {
         
         if($_POST['password']===$user['password']){
             
-            $_SESSION['email']=[
-                'ID'=>$user['ID'],
-                'role'=>$user['role']
-            ];
+            $_SESSION['user_ID'] = $user['user_ID'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['email'] = $user['email'];
             $account=true;
             header('location: ../index.php');       
             
