@@ -2,7 +2,7 @@
 require_once('../auth/db.php'); 
 session_start();
 
-//Add to cookbook logic
+// Add to cookbook logic
 if (isset($_POST['add_to_cookbook'])) {
     if (!isset($_SESSION['user_ID'])) {
         echo "You must be logged in to add recipes to your cookbook.";
@@ -10,30 +10,46 @@ if (isset($_POST['add_to_cookbook'])) {
     }
 
     $user_id = $_SESSION['user_ID'];
+    $user_role = $_SESSION['role'];
     $recipe_id = intval($_GET['id']);
 
     try {
-        // Check if the recipe is already in the user's cookbook
-        $checkStmt = $db->prepare("SELECT * FROM cookbook WHERE user_ID = :user_id AND recipe_ID = :recipe_id");
-        $checkStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
+        // Fetch the recipe owner to ensure it's not the user's own recipe
+        $stmt = $db->prepare("SELECT user_ID FROM recipes WHERE recipe_ID = :recipe_id");
+        $stmt->execute([':recipe_id' => $recipe_id]);
+        $recipeOwner = $stmt->fetchColumn();
 
-        if ($checkStmt->rowCount() > 0) {
-            echo "This recipe is already in your cookbook.";
+        if ($recipeOwner == $user_id) {
+            echo "You cannot add your own recipe to your cookbook.";
+            exit;
+        }
+
+
+        if ($user_role == 1) {
+            // Check if the recipe is already in the user's cookbook
+            $checkStmt = $db->prepare("SELECT * FROM cookbook WHERE user_ID = :user_id AND recipe_ID = :recipe_id");
+            $checkStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
+
+            if ($checkStmt->rowCount() > 0) {
+                echo "This recipe is already in your cookbook.";
+            } else {
+                // Add recipe to the cookbook table
+                $insertStmt = $db->prepare("INSERT INTO cookbook (user_ID, recipe_ID) VALUES (:user_id, :recipe_id)");
+                $insertStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
+
+                echo "Recipe added to your cookbook!";
+            }
         } else {
-            // Insert into the cookbook db table
-            $insertStmt = $db->prepare("INSERT INTO cookbook (user_ID, recipe_ID) VALUES (:user_id, :recipe_id)");
-            $insertStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
-
-            echo "Recipe added to your cookbook!";
+            echo "You do not have permission to add recipes to the cookbook.";
         }
     } catch (PDOException $e) {
         echo "Error adding recipe to cookbook: " . htmlspecialchars($e->getMessage());
     }
 }
 
-
+// Fetch recipe details
 if (isset($_GET['id'])) {
-    $recipe_id = intval($_GET['id']); // Ensure ID is an integer
+    $recipe_id = intval($_GET['id']); 
 
     try {
         $stmt = $db->prepare("SELECT * FROM recipes WHERE recipe_ID = :recipe_id");
@@ -53,6 +69,7 @@ if (isset($_GET['id'])) {
     echo "No recipe ID provided.";
     exit;
 }
+
 // Debugging session variables
 echo "<pre>";
 echo "Logged-in User ID: " . ($_SESSION['user_ID'] ?? 'Not set') . "<br>";
@@ -60,6 +77,7 @@ echo "User Role: " . ($_SESSION['role'] ?? 'Not set') . "<br>";
 echo "Recipe User ID: " . ($recipe['user_ID'] ?? 'Not set') . "<br>";
 echo "</pre>";
 
+// Determine if the user can edit/delete the recipe
 $canEditDelete = false;
 if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
     $logged_in_user_id = $_SESSION['user_ID'];
@@ -73,8 +91,8 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
         $canEditDelete = true;
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -109,7 +127,7 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
         <p class="lead">Explore delicious recipes in detail</p>
         <a href="../Auth/signout.php" class="btn btn-danger d-inline-block">Sign Out</a>
     <?php if ($canEditDelete): ?>
-        <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-warning d-inline-block">Edit Recipe</a>
+        <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Edit Recipe</a>
         <a href="delete.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Delete Recipe</a>
     <?php endif; ?>
     </div>
