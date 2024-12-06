@@ -24,7 +24,6 @@ if (isset($_POST['add_to_cookbook'])) {
             exit;
         }
 
-
         if ($user_role == 1) {
             // Check if the recipe is already in the user's cookbook
             $checkStmt = $db->prepare("SELECT * FROM cookbook WHERE user_ID = :user_id AND recipe_ID = :recipe_id");
@@ -70,13 +69,6 @@ if (isset($_GET['id'])) {
     exit;
 }
 
-// Debugging session variables
-echo "<pre>";
-echo "Logged-in User ID: " . ($_SESSION['user_ID'] ?? 'Not set') . "<br>";
-echo "User Role: " . ($_SESSION['role'] ?? 'Not set') . "<br>";
-echo "Recipe User ID: " . ($recipe['user_ID'] ?? 'Not set') . "<br>";
-echo "</pre>";
-
 // Determine if the user can edit/delete the recipe
 $canEditDelete = false;
 if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
@@ -92,7 +84,6 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -125,11 +116,16 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
     <div class="text-center mb-5">
         <h1 class="display-4">Tasty Recipes</h1>
         <p class="lead">Explore delicious recipes in detail</p>
-        <a href="../Auth/signout.php" class="btn btn-danger d-inline-block">Sign Out</a>
-    <?php if ($canEditDelete): ?>
-        <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Edit Recipe</a>
-        <a href="delete.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Delete Recipe</a>
-    <?php endif; ?>
+        <!-- Show the "Sign Out" button only if the user is logged in -->
+        <?php if (isset($_SESSION['user_ID'])): ?>
+            <a href="../Auth/signout.php" class="btn btn-danger d-inline-block">Sign Out</a>
+        <?php endif; ?>
+
+        <!-- Edit/Delete Buttons -->
+        <?php if ($canEditDelete): ?>
+            <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Edit Recipe</a>
+            <a href="delete.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Delete Recipe</a>
+        <?php endif; ?>
     </div>
 
     <!-- Recipe Card -->
