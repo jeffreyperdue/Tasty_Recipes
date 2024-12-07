@@ -11,5 +11,4 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
-$db = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8mb4', $user, $pass,$options); //connect once per every request
-//avoid creating new connections
+$db = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8mb4', $user, $pass,$options); 

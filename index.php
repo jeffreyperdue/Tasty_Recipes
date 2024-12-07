@@ -92,6 +92,7 @@ try {
                     <a href="./Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
                     <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
                     <a href="cookbook.php" class="btn btn-danger mt-4">View Cookbook</a>
+                    <a href="my_recipes.php" class="btn btn-danger mt-4">My Recipes</a>
                 </div>
             </div>
         <?php else: ?>
