@@ -3,7 +3,9 @@
 require_once('auth.php');
 require_once('db.php');
 $error='';
-
+//$pass =password_hash('makesgoodcheese',PASSWORD_DEFAULT); 
+//echo $pass;
+//die();
 // if logged in, redirect to recipe index
 if (isLoggedIn()) {
     header('location: ../index.php');
@@ -16,31 +18,37 @@ if (count($_POST) > 0) {
     correctFields();
     
     
-    //check for login credentials in csv file
+    //check for login credentials in database
     $query = $db->prepare('SELECT * FROM users WHERE email=?');
     $query->execute([$_POST['email']]);
 
     if($query->rowCount()){
-        $user=$query->fetch();
+        $user=$query->fetch(PDO::FETCH_ASSOC);
         
-        if($_POST['password']===$user['password']){
+        if (password_verify($_POST['password'], $user['password'])){
             
             $_SESSION['user_ID'] = $user['user_ID'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['email'] = $user['email'];
-            $account=true;
             header('location: ../index.php');       
             
         }
         else{
             
-            header('location: signup.php'); 
+            ?>
+                <div class="alert alert-info text-center" role="alert">
+                   Wrong email or password!
+                </div><?php 
         }
     }
     else{
-       
-        header('location: signup.php'); 
+        
+            ?>
+            <div class="alert alert-info text-center" role="alert">
+                You don't have an account! Please create one!
+            </div><?php
     }
+    
 }
 ?>
 
@@ -56,7 +64,7 @@ if (count($_POST) > 0) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header--> 
     <header>
         <div class="header-area">
             <div id="sticky-header" class="main-header-area">

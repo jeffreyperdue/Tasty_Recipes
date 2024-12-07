@@ -12,6 +12,7 @@ if (isset($_POST['add_to_cookbook'])) {
     $user_id = $_SESSION['user_ID'];
     $user_role = $_SESSION['role'];
     $recipe_id = intval($_GET['id']);
+    
 
     try {
         // Fetch the recipe owner to ensure it's not the user's own recipe
@@ -20,27 +21,32 @@ if (isset($_POST['add_to_cookbook'])) {
         $recipeOwner = $stmt->fetchColumn();
 
         if ($recipeOwner == $user_id) {
-            echo "You cannot add your own recipe to your cookbook.";
-            exit;
+            ?>
+                <div class="alert alert-info text-center" role="alert">You cannot add your own recipe to your cookbook.
+                </div><?php
+            
         }
 
-        if ($user_role == 1) {
+        else {
             // Check if the recipe is already in the user's cookbook
             $checkStmt = $db->prepare("SELECT * FROM cookbook WHERE user_ID = :user_id AND recipe_ID = :recipe_id");
             $checkStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
 
-            if ($checkStmt->rowCount() > 0) {
-                echo "This recipe is already in your cookbook.";
+            if ($checkStmt->rowCount() > 0) {?>
+                <div class="alert alert-info text-center" role="alert">This recipe is already in your cookbook.
+                </div><?php
+                
             } else {
                 // Add recipe to the cookbook table
                 $insertStmt = $db->prepare("INSERT INTO cookbook (user_ID, recipe_ID) VALUES (:user_id, :recipe_id)");
                 $insertStmt->execute([':user_id' => $user_id, ':recipe_id' => $recipe_id]);
 
-                echo "Recipe added to your cookbook!";
+                ?>
+                <div class="alert alert-info text-center" role="alert">Recipe added to your cookbook!
+                </div><?php 
+                
             }
-        } else {
-            echo "You do not have permission to add recipes to the cookbook.";
-        }
+        } 
     } catch (PDOException $e) {
         echo "Error adding recipe to cookbook: " . htmlspecialchars($e->getMessage());
     }
@@ -118,13 +124,14 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
         <p class="lead">Explore delicious recipes in detail</p>
         <!-- Show the "Sign Out" button only if the user is logged in -->
         <?php if (isset($_SESSION['user_ID'])): ?>
-            <a href="../Auth/signout.php" class="btn btn-danger d-inline-block">Sign Out</a>
+            <a href="../Auth/signout.php" class="btn btn-danger mt-4">Sign Out</a>
+            <a href="../cookbook.php" class="btn btn-danger mt-4">View Cookbook</a>
         <?php endif; ?>
 
         <!-- Edit/Delete Buttons -->
         <?php if ($canEditDelete): ?>
-            <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Edit Recipe</a>
-            <a href="delete.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger d-inline-block">Delete Recipe</a>
+            <a href="edit.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger mt-4">Edit Recipe</a>
+            <a href="delete.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>" class="btn btn-danger mt-4">Delete Recipe</a>
         <?php endif; ?>
     </div>
 
