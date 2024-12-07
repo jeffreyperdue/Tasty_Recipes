@@ -111,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_changes'])) {
             <div class="text-center mt-4">
                 <button type="submit" name="save_changes" class="btn btn-success">Save Changes</button>
                 <a href="manage_users.php" class="btn btn-secondary">Discard Changes</a>
+                <a href="index.php" class="btn btn-secondary">Home</a>
             </div>
         </form>
     </div>
