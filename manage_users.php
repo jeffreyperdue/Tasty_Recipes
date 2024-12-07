@@ -2,13 +2,13 @@
 require_once('auth/db.php');
 session_start();
 
-// Check if the user is an admin
 if (!isset($_SESSION['user_ID']) || $_SESSION['role'] != 2) {
     header('Location: index.php');
     exit();
 }
 
-// Fetch all users from the database
+$usersUpdated = false; // Flag to track if users were updated
+
 try {
     $stmt = $db->query("SELECT user_ID, email, firstname, lastname, role FROM users");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -17,7 +17,6 @@ try {
     exit();
 }
 
-// Handle form submission to save changes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_changes'])) {
     foreach ($_POST['roles'] as $userID => $newRole) {
         try {
@@ -30,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_changes'])) {
             echo "Error updating user role: " . htmlspecialchars($e->getMessage());
         }
     }
-    // Redirect to the same page to reflect changes
-    header('Location: manage_users.php');
+    $usersUpdated = true; // Set the flag to true
+    header('Location: manage_users.php?updated=true');
     exit();
 }
 ?>
@@ -58,15 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_changes'])) {
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
                     <div class="row align-items-center">
-                        <!-- Logo Section -->
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="index.php">
-                                    <img src="./img/logo.png" alt="Logo" style="max-width: 20%; height: auto; display: inline-block;">
+                                    <img src="./img/logo.png" alt="Logo" style="max-width: 20%; height: auto;">
                                 </a>
                             </div>
                         </div>
-                        <!-- Greeting Section -->
                         <?php if (isset($_SESSION['user_ID'])): ?>
                             <div class="col-xl-9 col-lg-10 text-right">
                                 <div class="greeting-message">
@@ -120,5 +117,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_changes'])) {
 
     <!-- JS Scripts -->
     <script src="./js/bootstrap.bundle.min.js"></script>
+
+    <!-- Success Notification -->
+    <?php if (isset($_GET['updated']) && $_GET['updated'] == 'true'): ?>
+        <script>
+            alert("Users Updated Successfully!");
+        </script>
+    <?php endif; ?>
 </body>
 </html>
