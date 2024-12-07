@@ -3,9 +3,7 @@
 require_once('auth.php');
 require_once('db.php');
 $error='';
-//$pass =password_hash('makesgoodcheese',PASSWORD_DEFAULT); 
-//echo $pass;
-//die();
+
 // if logged in, redirect to recipe index
 if (isLoggedIn()) {
     header('location: ../index.php');
