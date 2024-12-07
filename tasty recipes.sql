@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 07:36 PM
+-- Generation Time: Dec 07, 2024 at 02:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,10 @@ CREATE TABLE `cookbook` (
 INSERT INTO `cookbook` (`cookbook_ID`, `user_ID`, `recipe_ID`) VALUES
 (2, 1, 1),
 (1, 1, 2),
-(3, 3, 4);
+(3, 3, 4),
+(6, 15, 8),
+(5, 16, 3),
+(4, 16, 8);
 
 -- --------------------------------------------------------
 
@@ -64,7 +67,7 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`recipe_ID`, `user_ID`, `title`, `image`, `ingredients`, `instructions`, `cooking_time`, `category`) VALUES
-(1, 2, 'Spaghetti Bolognese', 'spaghetti.jpg', '200g spaghetti\n100g ground beef\n1 onion, chopped\n2 garlic cloves, minced\n400g can of tomatoes\nSalt and pepper to taste', 'Boil the spaghetti. In another pan, fry the onion and garlic, then add the beef. Cook until browned. Add the tomatoes and simmer for 20 minutes. Serve over spaghetti.', '30 minutes', 'Dinner'),
+(1, 5, 'Spaghetti Bolognese', 'spaghetti.jpg', '200g spaghetti\n100g ground beef\n1 onion, chopped\n2 garlic cloves, minced\n400g can of tomatoes\nSalt and pepper to taste', 'Boil the spaghetti. In another pan, fry the onion and garlic, then add the beef. Cook until browned. Add the tomatoes and simmer for 20 minutes. Serve over spaghetti.', '30 minutes', 'Dinner'),
 (2, 1, 'Chicken Caesar Salad', 'caesar_salad.jpg', '2 chicken breasts\n2 romaine lettuce\nCaesar dressing\nCroutons\nParmesan cheese', 'Grill the chicken and slice it. Toss the lettuce with Caesar dressing, top with chicken, croutons, and Parmesan.', '15 minutes', 'Lunch'),
 (3, 3, 'Beef Tacos', 'beef_tacos.jpg', '100g ground beef\nTaco shells\n1 onion, chopped\n1 tomato, diced\nLettuce, shredded\nCheddar cheese, grated\nSour cream\nTaco seasoning', 'Cook the ground beef in a pan with taco seasoning. Assemble the tacos by adding the beef, onion, tomato, lettuce, cheese, and sour cream to the taco shells.', '25 minutes', 'Dinner'),
 (4, 1, 'Pancakes', 'pancakes.jpg', '1 cup flour\n1 egg\n1 cup milk\n2 tbsp sugar\n1 tsp baking powder\nPinch of salt\nButter for cooking', 'Mix all the ingredients into a smooth batter. Heat a non-stick pan and cook pancakes until golden brown on both sides. Serve with syrup or toppings of your choice.', '15 minutes', 'Breakfast'),
@@ -111,11 +114,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`, `role`) VALUES
-(1, 'perduej7@nku.edu', '123', 'Jeff', 'Perdue', 1),
-(2, 'millern28@nku.edu', '456', 'Nick', 'Miller', 1),
-(3, 'anthonyb1@nku.edu', '789', 'Brandon', 'Anthony', 1),
-(4, 'caporusso@user.com', '123456', 'Nicholas', 'Caporusso (User)', 1),
-(5, 'caporusso@admin.com', 'makesgoodcheese', 'Nicholas', 'Caporusso (Admin)', 2);
+(1, 'perduej7@nku.edu', '$2y$10$Q7BdfP1vEQapVOsonCFQQ.i58.sx.ynKdWHItNOfoRoUKucUrVNYG', 'Jeff', 'Perdue', 1),
+(2, 'millern28@nku.edu', '$2y$10$LBMoAiE2D6Kw/SfMhVmkx.fRFQx70nCNHqe6SH0UCSTOmbKuakOTW', 'Nick', 'Miller', 1),
+(3, 'anthonyb1@nku.edu', '$2y$10$oiyRJI5TD./rdEcB.7JMP.tNgyaifMNWKugmum7YvINfptBanAGge', 'Brandon', 'Anthony', 1),
+(4, 'caporusso@user.com', '$2y$10$A1sfbJXgY17MEsZ8Hr4mE.7uT462yttpqlWN1peLlsNRgg71ESvjC', 'Nicholas', 'Caporusso (User)', 1),
+(5, 'caporusso@admin.com', '$2y$10$6GD/YYYvVFfvN7jKy43tCeGmrZfmlfBefWB6FINEQxl0NyVV.Zs82', 'Nicholas', 'Caporusso (Admin)', 2);
 
 --
 -- Indexes for dumped tables
@@ -155,7 +158,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cookbook`
 --
 ALTER TABLE `cookbook`
-  MODIFY `cookbook_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cookbook_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `recipes`
@@ -173,7 +176,7 @@ ALTER TABLE `recipes_r_tags`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

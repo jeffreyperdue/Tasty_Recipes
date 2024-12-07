@@ -11,16 +11,43 @@ if(isset($_SESSION['email'])){
 
 //check to see if form has been submitted with values
 if(count($_POST)>0){
+    $query = $db->prepare('SELECT * FROM users WHERE email=?');
+    $query->execute([$_POST['email']]);
+
     
-    completeFields();
-    if(!isset($_POST['password_confirm'][0])) $error='You must enter your password';
-    correctFields();
-    if($_POST['password'] != $_POST['password_confirm']) $error='passwords must match';
+    $user=$query->fetch(PDO::FETCH_ASSOC);
 
-    $query=$db->prepare('INSERT INTO users(email,password,firstname,lastname,role) VALUES(?,?,?,?,?)');
-    $query->execute([$_POST['email'],$_POST['password'],$_POST['firstname'],$_POST['lastname'],1]);
+        //check if user already exists
+        if($user){    
+            if($_POST['email']===$user['email']){?>
+                <div class="alert alert-info text-center" role="alert">
+                    You already have an account! Please go to the sign in page!
+                </div><?php       
+                
+            }
+        }
+        else{
+            
+            completeFields();
+            if(!isset($_POST['password_confirm'][0])) $error='You must enter your password';
+            correctFields();
+            if($_POST['password'] != $_POST['password_confirm']) $error='passwords must match';
 
-    header('location: ../index.php');
+            $passwordHash = password_hash($_POST['password'],PASSWORD_DEFAULT);
+            $query=$db->prepare('INSERT INTO users(email,password,firstname,lastname,role) VALUES(?,?,?,?,?)');
+            $query->execute([$_POST['email'],$passwordHash,$_POST['firstname'],$_POST['lastname'],1]);
+            
+            $_SESSION['email']=$_POST['email'];
+            $_SESSION['user_ID']=$db->lastInsertId();
+            $stmt = $db->prepare("SELECT role FROM users WHERE email = ?");
+            $stmt->execute([$_POST['email']]);
+
+            $_SESSION['role'] = $stmt->fetchColumn();
+             
+            
+
+            header('location: ../index.php'); 
+        }   
 
 }
 
