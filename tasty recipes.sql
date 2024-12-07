@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2024 at 02:05 AM
+-- Generation Time: Dec 07, 2024 at 08:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `cookbook` (
 INSERT INTO `cookbook` (`cookbook_ID`, `user_ID`, `recipe_ID`) VALUES
 (2, 1, 1),
 (1, 1, 2),
-(3, 3, 4),
+(10, 3, 8),
 (6, 15, 8),
 (5, 16, 3),
 (4, 16, 8);
@@ -81,7 +81,8 @@ INSERT INTO `recipes` (`recipe_ID`, `user_ID`, `title`, `image`, `ingredients`, 
 (13, 1, 'Vegetable Curry', 'vegetable_curry.jpg', '1 cup cauliflower florets\n1 cup potatoes, diced\n1 cup peas\n1 can coconut milk\n2 tbsp curry powder\n1 onion, chopped\n1 garlic clove, minced\n1 tbsp oil', 'Heat oil, sauté onion and garlic. Add curry powder, vegetables, and coconut milk. Simmer until vegetables are tender. Serve with rice.', '30 minutes', 'Dinner'),
 (14, 2, 'Greek Salad', 'greek_salad.jpg', '2 cucumbers, diced\n3 tomatoes, diced\n1 red onion, sliced\n1/2 cup olives\n1/2 cup feta cheese, crumbled\n2 tbsp olive oil\n1 tbsp lemon juice\nSalt and pepper to taste', 'Combine cucumbers, tomatoes, onion, olives, and feta in a bowl. Drizzle with olive oil and lemon juice. Season with salt and pepper.', '10 minutes', 'Appetizer'),
 (15, 3, 'Banana Smoothie', 'banana_smoothie.jpg', '2 bananas\n1 cup milk\n1 tbsp honey\n1/2 tsp vanilla extract\nIce cubes (optional)', 'Blend bananas, milk, honey, and vanilla until smooth. Add ice cubes if desired. Serve chilled.', '5 minutes', 'Beverage'),
-(16, 4, 'Grilled Cheese', '../img/No_Image_Available.jpg', 'Bread\r\nCheese\r\nButter', 'Grill it on each side over med-high heat for 4 minutes', '10', 'lunch');
+(16, 4, 'Grilled Cheese', '../img/No_Image_Available.jpg', 'Bread\r\nCheese\r\nButter', 'Grill it on each side over med-high heat for 4 minutes', '10', 'lunch'),
+(19, 18, 'Popcorn', '../img/No_Image_Available.jpg', 'Corn', 'Heat corn up until it pops.', '5', 'Snack');
 
 -- --------------------------------------------------------
 
@@ -90,8 +91,8 @@ INSERT INTO `recipes` (`recipe_ID`, `user_ID`, `title`, `image`, `ingredients`, 
 --
 
 CREATE TABLE `recipes_r_tags` (
-  `ID` int(10) NOT NULL,
-  `recipe_ID` int(10) NOT NULL
+  `ID` int(10) UNSIGNED NOT NULL,
+  `recipe_ID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -118,7 +119,8 @@ INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`, `r
 (2, 'millern28@nku.edu', '$2y$10$LBMoAiE2D6Kw/SfMhVmkx.fRFQx70nCNHqe6SH0UCSTOmbKuakOTW', 'Nick', 'Miller', 1),
 (3, 'anthonyb1@nku.edu', '$2y$10$oiyRJI5TD./rdEcB.7JMP.tNgyaifMNWKugmum7YvINfptBanAGge', 'Brandon', 'Anthony', 1),
 (4, 'caporusso@user.com', '$2y$10$A1sfbJXgY17MEsZ8Hr4mE.7uT462yttpqlWN1peLlsNRgg71ESvjC', 'Nicholas', 'Caporusso (User)', 1),
-(5, 'caporusso@admin.com', '$2y$10$6GD/YYYvVFfvN7jKy43tCeGmrZfmlfBefWB6FINEQxl0NyVV.Zs82', 'Nicholas', 'Caporusso (Admin)', 2);
+(5, 'caporusso@admin.com', '$2y$10$6GD/YYYvVFfvN7jKy43tCeGmrZfmlfBefWB6FINEQxl0NyVV.Zs82', 'Nicholas', 'Caporusso (Admin)', 2),
+(18, 'joe@cool.com', '$2y$10$oJukYaS8SLw9vVV1aqy9k.Lpf78fXAfkv2oKVDfUMGSD/jo2WWwSq', 'Joe', 'Cool', 1);
 
 --
 -- Indexes for dumped tables
@@ -129,7 +131,8 @@ INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`, `r
 --
 ALTER TABLE `cookbook`
   ADD PRIMARY KEY (`cookbook_ID`),
-  ADD UNIQUE KEY `user_ID` (`user_ID`,`recipe_ID`);
+  ADD UNIQUE KEY `user_ID` (`user_ID`,`recipe_ID`),
+  ADD KEY `recipe_ID` (`recipe_ID`);
 
 --
 -- Indexes for table `recipes`
@@ -142,7 +145,8 @@ ALTER TABLE `recipes`
 -- Indexes for table `recipes_r_tags`
 --
 ALTER TABLE `recipes_r_tags`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `recipe_ID` (`recipe_ID`);
 
 --
 -- Indexes for table `users`
@@ -158,35 +162,47 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cookbook`
 --
 ALTER TABLE `cookbook`
-  MODIFY `cookbook_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cookbook_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `recipe_ID` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `recipe_ID` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `recipes_r_tags`
 --
 ALTER TABLE `recipes_r_tags`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `cookbook`
+--
+ALTER TABLE `cookbook`
+  ADD CONSTRAINT `cookbook_ibfk_1` FOREIGN KEY (`recipe_ID`) REFERENCES `recipes` (`recipe_ID`);
+
+--
 -- Constraints for table `recipes`
 --
 ALTER TABLE `recipes`
   ADD CONSTRAINT `recipes_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_ID`);
+
+--
+-- Constraints for table `recipes_r_tags`
+--
+ALTER TABLE `recipes_r_tags`
+  ADD CONSTRAINT `recipes_r_tags_ibfk_1` FOREIGN KEY (`recipe_ID`) REFERENCES `recipes` (`recipe_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
