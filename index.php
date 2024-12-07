@@ -71,9 +71,7 @@ try {
                     <!-- Greeting Section -->
                     <?php if (!empty($greetingMessage)): ?>
                         <div class="col-xl-9 col-lg-10 text-right">
-                            <div class="greeting-message">
-                                <?php echo $greetingMessage; ?>
-                            </div>
+                                <h1 class="display-4 greeting-message"><?php echo $greetingMessage; ?></h1>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -93,6 +91,9 @@ try {
                     <a href="recipe/create.php" class="btn btn-danger mt-4">Create New Recipe</a>
                     <a href="cookbook.php" class="btn btn-danger mt-4">View Cookbook</a>
                     <a href="my_recipes.php" class="btn btn-danger mt-4">My Recipes</a>
+                <?php if (isLoggedIn() && $_SESSION['role'] == 2): ?>
+                    <a href="manage_users.php" class="btn btn-danger mt-4">Manage Users</a>
+                <?php endif; ?>
                 </div>
             </div>
         <?php else: ?>

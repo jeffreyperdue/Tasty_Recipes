@@ -46,10 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create New Recipe</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Create New Recipe</h1>
+        <div class="text-center mb-5">
+            <h1 class="display-4">Create New Recipe</h1>
+        </div>
     <form method="POST" enctype="multipart/form-data" action="" class="mx-auto" style="max-width: 600px;">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
