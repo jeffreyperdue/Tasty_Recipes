@@ -169,7 +169,7 @@ if (isset($_SESSION['user_ID']) && isset($_SESSION['role'])) {
                     <a href="../index.php" class="btn btn-primary mt-4">Back to Recipes</a>
 
                     <!-- Add to Cookbook Button -->
-                    <?php if (isset($_SESSION['user_ID']) && $_SESSION['role'] == 1 || 2): ?>
+                    <?php if (isset($_SESSION['user_ID'])): ?>
                         <form method="POST" action="detail.php?id=<?php echo htmlspecialchars($recipe['recipe_ID']); ?>">
                         <button type="submit" name="add_to_cookbook" class="btn btn-primary mt-4">Add to Cookbook</button>
                         </form>
