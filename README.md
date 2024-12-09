@@ -76,4 +76,4 @@ This project is an extension of the Midterm submission, incorporating concepts l
 - **Password**: makesgoodcheese 
 
 ### ASE 230 Final Demo Video
-[![Watch the video](https://img.youtube.com/vi/H0xtf4jKap8/0.jpg)](https://www.youtube.com/watch?v=H0xtf4jKap8)
+[![Watch the video](https://img.youtube.com/vi/1xUUakukniA/0.jpg)](https://www.youtube.com/watch?v=1xUUakukniA)
