@@ -74,3 +74,6 @@ This project is an extension of the Midterm submission, incorporating concepts l
 ### Admin Credentials
 - **Email**: caporusso@admin.com  
 - **Password**: makesgoodcheese 
+
+### ASE 230 Final Demo Video
+[![Watch the video](https://img.youtube.com/vi/H0xtf4jKap8/0.jpg)](https://www.youtube.com/watch?v=H0xtf4jKap8)
